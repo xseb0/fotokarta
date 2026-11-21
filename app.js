@@ -34,14 +34,16 @@ const st = {
 // ── karta ──
 const map = L.map("map", { zoomControl: false, attributionControl: true }).setView([32.76, -16.98], 10);
 L.control.scale({ imperial: false, position: "bottomright" }).addTo(map);
+// CARTO-nyckel (gratisnivå, får ligga publikt enligt Sebastian 2026-11-21)
+const CARTO_KEY = "cb1_5ddx_1_b2bc9a882ba6667facbb099a";
 const BASES = {
-  streets: { n: "Gator", sw: "linear-gradient(135deg,#f2efe9,#cfe3c4)", l: () => L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png", { maxZoom: 20, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
+  streets: { n: "Gator", sw: "linear-gradient(135deg,#f2efe9,#cfe3c4)", l: () => L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?api_key=" + CARTO_KEY, { maxZoom: 20, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
   osm: { n: "OSM", sw: "linear-gradient(135deg,#f2efe9,#f4c99b)", l: () => L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }) },
   topo: { n: "Terräng", sw: "linear-gradient(135deg,#c9d3b0,#e9e2c7)", l: () => L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", { maxZoom: 17, attribution: "© OpenStreetMap, SRTM | OpenTopoMap" }) },
   sat:  { n: "Satellit", sw: "linear-gradient(135deg,#253523,#5c6b4a)", l: () => L.layerGroup([
           L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, attribution: "Esri World Imagery" }),
-          L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png", { maxZoom: 19, subdomains: "abcd" })]) },
-  dark: { n: "Mörk", sw: "linear-gradient(135deg,#0b1218,#26323b)", l: () => L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png", { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
+          L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png?api_key=" + CARTO_KEY, { maxZoom: 19, subdomains: "abcd" })]) },
+  dark: { n: "Mörk", sw: "linear-gradient(135deg,#0b1218,#26323b)", l: () => L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?api_key=" + CARTO_KEY, { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
 };
 let baseKey = store.get("base", "topo"), baseLayer = null;
 function setBase(k) { if (baseLayer) map.removeLayer(baseLayer); baseKey = k; baseLayer = BASES[k].l().addTo(map); store.set("base", k);
