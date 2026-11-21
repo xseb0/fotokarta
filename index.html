@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070d12">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Fotokartan Madeira</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css?v=5">
+</head>
+<body>
+<div id="map"></div>
+
+<aside class="side">
+<div class="top">
+  <div class="searchbox">
+    <span class="logo">Foto<span>karta</span></span>
+    <input id="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Sök plats" autocomplete="off" aria-label="Sök plats">
+    <button class="iconbtn" id="qClear" aria-label="Rensa sökning" hidden><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="ctx" id="ctx">
+    <div class="ctxh" id="ctxHead"><span>Ljus och väder</span><span class="sun" id="sun"></span><button class="tgl" id="ctxTgl" aria-expanded="true">Dölj</button></div>
+    <div class="seg" id="day"><button data-v="0">Idag</button><button data-v="1">I morgon</button><button data-v="2">Övermorgon</button></div>
+    <div class="seg" id="slot"><button data-v="rise">Soluppgång</button><button data-v="mid">Förmiddag</button><button data-v="set">Solnedgång</button></div>
+    <p class="small" id="wxMsg">Hämtar prognos …</p>
+    <div class="ctxh"><span>Tillgänglighet</span></div>
+    <div class="seg" id="acc"><button data-v="any">Alla</button><button data-v="car">Bil fram</button><button data-v="short">≤ 20 min gång</button><button data-v="hike">Vandring</button></div>
+    <label class="ck"><input type="checkbox" id="hideClosed" checked> Dölj stängda leder och vägar</label>
+    <label class="ck"><input type="checkbox" id="onlyGood"> Bara platser där vädret passar just nu</label>
+  </div>
+</div>
+<div class="sheet collapsed" id="sheet">
+  <button class="bar" id="sheetBar" aria-expanded="false"><span class="grab"></span><strong id="sheetTitle">Platser</strong><span class="sub" id="sheetSub"></span>
+    <svg viewBox="0 0 24 24" width="20" height="20" style="stroke:currentColor;fill:none;stroke-width:2"><path d="M6 15l6-6 6 6"/></svg></button>
+  <div class="list" id="list"></div>
+</div>
+</aside>
+
+<div class="fab">
+  <button class="iconbtn" id="bLayers" aria-label="Kartlager" title="Kartlager"><svg viewBox="0 0 24 24"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></button>
+  <button class="iconbtn" id="bLocate" aria-label="Visa min position" title="Visa min position"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></button>
+  <button class="iconbtn" id="bInfo" aria-label="Om variablerna" title="Om variablerna"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg></button>
+</div>
+
+<div class="pop" id="layers" hidden>
+  <div class="row pophead"><h3>Karta</h3><button class="btn" data-close="layers">Klar</button></div>
+  <div class="basegrid" id="basegrid"></div>
+</div>
+
+<div class="pop info" id="info" hidden>
+  <div class="row pophead"><h3>Så läser du kartan</h3><button class="btn" data-close="info">Klar</button></div>
+  <div id="infoBody"></div>
+</div>
+
+<div class="card" id="card" hidden></div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Bild i större format" hidden>
+  <div class="lbstage" id="lbStage"><img id="lbImg" alt=""></div>
+  <button class="lbbtn lbclose" id="lbClose" aria-label="Stäng">×</button>
+  <button class="lbbtn lbprev" id="lbPrev" aria-label="Föregående bild">‹</button>
+  <button class="lbbtn lbnext" id="lbNext" aria-label="Nästa bild">›</button>
+  <p class="lbcap" id="lbCap"></p>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="spots.js?v=5"></script>
+<script src="spots-region.js?v=5"></script>
+<script src="app.js?v=5"></script>
+</body>
+</html>
