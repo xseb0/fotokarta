@@ -8,7 +8,7 @@
 <title>Fotokartan Madeira</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="style.css?v=8">
+<link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
 <div id="map"></div>
@@ -28,6 +28,8 @@
     <p class="small" id="wxMsg">Hämtar prognos …</p>
     <div class="ctxh"><span>Tillgänglighet</span></div>
     <div class="seg" id="acc"><button data-v="any">Alla</button><button data-v="car">Bil fram</button><button data-v="short">≤ 20 min gång</button><button data-v="hike">Vandring</button></div>
+    <div class="ctxh"><span>Betyg</span></div>
+    <div class="seg" id="minR"><button data-v="0">Alla</button><button data-v="3">3+</button><button data-v="4">4+</button><button data-v="5">Bara 5</button></div>
     <label class="ck"><input type="checkbox" id="hideClosed" checked> Dölj stängda leder och vägar</label>
     <label class="ck"><input type="checkbox" id="onlyGood"> Bara platser där vädret passar just nu</label>
   </div>
@@ -66,9 +68,9 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="spots.js?v=8"></script>
-<script src="spots-region.js?v=8"></script>
-<script src="thumbs.js?v=8"></script>
-<script src="app.js?v=8"></script>
+<script src="spots.js?v=10"></script>
+<script src="spots-region.js?v=10"></script>
+<script src="thumbs.js?v=10"></script>
+<script src="app.js?v=10"></script>
 </body>
 </html>

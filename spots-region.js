@@ -149,8 +149,7 @@ const EXTRA_EXISTING = {
 "lon": -17.0143,
 "note": "Täta lager av lagerskog strax öster om parken. (Commons: Intense vegetation near Pico de Encumeada (26042641687))"
 }
-],
-"cam": null
+]
 },
 "ninho": {
 "stands": [
@@ -273,6 +272,78 @@ const EXTRA_EXISTING = {
 "name": "Netmadeira: Eira do Serrado",
 "url": "https://www.netmadeira.com/webcams-madeira/eira-do-serrado",
 "km": 0.0
+}
+},
+"rabacal": {
+"stands": [
+{
+"name": "Starten för PR6, 25 Fontes och Risco",
+"lat": 32.76163,
+"lon": -17.13435,
+"note": "Din anteckning: stämningsfull skog och två vattenfall, 4–6 timmar, lång tunnel på slutet, ta med pannlampa. (Din nål i Google Maps)"
+},
+{
+"name": "PR6.4 start vid Pico Gordo",
+"lat": 32.76904,
+"lon": -17.15357,
+"note": "Start för Levada Velha do Rabaçal. (Visit Madeira PR6.4)"
+},
+{
+"name": "PR6.6 start",
+"lat": 32.75562,
+"lon": -17.1426,
+"note": "Start för Túnel do Cavalo. (Visit Madeira PR6.6)"
+},
+{
+"name": "Risco",
+"lat": 32.76057,
+"lon": -17.12442,
+"note": "Mot Risco-fallet. (OSM node 333732564)"
+},
+{
+"name": "25 Fontes",
+"lat": 32.76564,
+"lon": -17.12513,
+"note": "Mot källorna och gölen. (OSM node 333732579)"
+},
+{
+"name": "Rabaçal",
+"lat": 32.75859,
+"lon": -17.13904,
+"note": "Mot öst ner över dalen. (OSM node 979615254)"
+}
+],
+"cam": {
+"name": "NetMadeira Rabaçal",
+"url": "https://www.netmadeira.com/webcams-madeira/rabacal-madeira",
+"km": 0.8
+}
+},
+"chao-ribeira": {
+"stands": [
+{
+"name": "Vereda da Cavaca",
+"lat": 32.81562,
+"lon": -17.11327,
+"note": "Stig upp från dalen mot Fanal. (Din nål i Google Maps)"
+},
+{
+"name": "Poço do Candeeiro",
+"lat": 32.81083,
+"lon": -17.11536,
+"note": "Fallet. (OSM node 8628522517)"
+},
+{
+"name": "Viveiro de trutas",
+"lat": 32.7965,
+"lon": -17.11434,
+"note": "Vägens slut i dalen där skogen börjar. (OSM Viveiro de trutas)"
+}
+],
+"cam": {
+"name": "NetMadeira Seixal",
+"url": "https://www.netmadeira.com/webcams-madeira/seixal",
+"km": 3.4
 }
 },
 "sao-lourenco": {
@@ -572,27 +643,6 @@ const EXTRA_EXISTING = {
 "km": 3.5
 }
 },
-"chao-ribeira": {
-"stands": [
-{
-"name": "Poço do Candeeiro",
-"lat": 32.81083,
-"lon": -17.11536,
-"note": "Fallet. (OSM node 8628522517)"
-},
-{
-"name": "Viveiro de trutas",
-"lat": 32.7965,
-"lon": -17.11434,
-"note": "Vägens slut i dalen där skogen börjar. (OSM Viveiro de trutas)"
-}
-],
-"cam": {
-"name": "NetMadeira Seixal",
-"url": "https://www.netmadeira.com/webcams-madeira/seixal",
-"km": 3.4
-}
-},
 "pr15": {
 "stands": [
 {
@@ -651,45 +701,6 @@ const EXTRA_EXISTING = {
 "name": "NetMadeira Rabaçal",
 "url": "https://www.netmadeira.com/webcams-madeira/rabacal-madeira",
 "km": 7.4
-}
-},
-"rabacal": {
-"stands": [
-{
-"name": "PR6.4 start vid Pico Gordo",
-"lat": 32.76904,
-"lon": -17.15357,
-"note": "Start för Levada Velha do Rabaçal. (Visit Madeira PR6.4)"
-},
-{
-"name": "PR6.6 start",
-"lat": 32.75562,
-"lon": -17.1426,
-"note": "Start för Túnel do Cavalo. (Visit Madeira PR6.6)"
-},
-{
-"name": "Risco",
-"lat": 32.76057,
-"lon": -17.12442,
-"note": "Mot Risco-fallet. (OSM node 333732564)"
-},
-{
-"name": "25 Fontes",
-"lat": 32.76564,
-"lon": -17.12513,
-"note": "Mot källorna och gölen. (OSM node 333732579)"
-},
-{
-"name": "Rabaçal",
-"lat": 32.75859,
-"lon": -17.13904,
-"note": "Mot öst ner över dalen. (OSM node 979615254)"
-}
-],
-"cam": {
-"name": "NetMadeira Rabaçal",
-"url": "https://www.netmadeira.com/webcams-madeira/rabacal-madeira",
-"km": 0.8
 }
 },
 "paul-serra": {
@@ -2849,6 +2860,130 @@ SPOTS.push(...[
 "url": "https://www.netmadeira.com/webcams-madeira/ponta-delgada",
 "km": 0.8
 }
+},
+{
+"id": "hemlig-fanal",
+"name": "Hemlig del av Fanal",
+"cat": "forest",
+"wx": "fog",
+"lat": 32.81697,
+"lon": -17.14636,
+"ele": 1150,
+"coordSrc": "Din nål i Google Maps (Vill besöka)",
+"rating": 5,
+"style": 5,
+"fog": 5,
+"calm": 5,
+"mode": "short",
+"walk": 15,
+"km": 0.8,
+"gain": 40,
+"diff": "Lätt: över betesmarken norr om Fanals skogsstation",
+"fee": "Ingen",
+"light": "Tät dimma mitt på dagen, eller blått gryningsljus innan turisterna kommer.",
+"why": "Din egen markering: en undanskymd del av Fanal norr om den kända lagerdungen, med samma förvridna til-träd men utan folk.",
+"tips": "Instagram-inlägget som nålen pekar på: https://www.instagram.com/p/C_7jgBmO0EO/. Parkera vid Posto Florestal Fanal och gå norrut.",
+"figure": true,
+"still": true,
+"shot": false,
+"status": "unknown",
+"statusNote": "Ingen 2026-källa. Vägen till Fanal (ER209) var öppen före stormen Charles; kontrollera på plats.",
+"src": "https://www.instagram.com/p/C_7jgBmO0EO/",
+"stands": [],
+"cam": null
+},
+{
+"id": "skogsparti-pereiro",
+"name": "Vackert skogsparti ovanför Funchal",
+"cat": "forest",
+"wx": "fog",
+"lat": 32.71184,
+"lon": -16.89025,
+"ele": 1050,
+"coordSrc": "Din nål i Google Maps (Vill besöka)",
+"rating": 4,
+"style": 4,
+"fog": 4,
+"calm": 4,
+"mode": "short",
+"walk": 10,
+"km": 0.4,
+"gain": 20,
+"diff": "Lätt: kort bit från vägen mellan Montado do Pereiro och Poiso",
+"fee": "Ingen",
+"light": "Dimma som drar in från norr på eftermiddagen, eller mjukt ljus genom stammarna en mulen dag.",
+"why": "Din egen nål: ett skogsparti nära Montado do Pereiro, i samma dimbälte som parkens höga stammar och mossiga mark.",
+"tips": "Kombinera med Montado do Pereiro och Poço da Neve samma dag. Ingen beskrivning fanns på nålen, så exakt motiv får du se på plats.",
+"figure": true,
+"still": true,
+"shot": false,
+"status": "unknown",
+"statusNote": "Ingen 2026-källa om läget efter stormen Charles.",
+"src": "https://www.google.com/maps?q=32.71184,-16.89025",
+"stands": [],
+"cam": null
+},
+{
+"id": "agua-dalto-faial",
+"name": "Água d'Alto-fallet vid Faial",
+"cat": "water",
+"wx": "soft",
+"lat": 32.79828,
+"lon": -16.87145,
+"ele": 300,
+"coordSrc": "Din nål i Google Maps (Vill besöka)",
+"rating": 4,
+"style": 4,
+"fog": 3,
+"calm": 4,
+"mode": "short",
+"walk": 15,
+"km": 0.5,
+"gain": 60,
+"diff": "Lätt till medel: kort väg ner i ravinen, kan vara halt",
+"fee": "Ingen",
+"light": "Mulet väder eller skugga i ravinen; undvik hård sol på vattnet.",
+"why": "Ett högt fall i en grön ravin mellan Faial och São Roque do Faial, där vattnet blir en ljus linje mot mörk klippa.",
+"tips": "Efter stormen Charles flödar falllen mer än vanligt. Ta med regnskydd för kameran nära fallet.",
+"figure": true,
+"still": false,
+"shot": false,
+"status": "unknown",
+"statusNote": "Ingen 2026-källa. Inte en PR-led; stigen kan vara påverkad av stormen Charles.",
+"src": "https://www.google.com/maps?q=32.79828,-16.87145",
+"stands": [],
+"cam": null
+},
+{
+"id": "mercado-lavradores",
+"name": "Mercado dos Lavradores",
+"cat": "flower",
+"wx": "soft",
+"lat": 32.64882,
+"lon": -16.90407,
+"ele": 20,
+"coordSrc": "Din nål i Google Maps (Vill besöka)",
+"rating": 1,
+"style": 1,
+"fog": 1,
+"calm": 1,
+"mode": "car",
+"walk": 2,
+"km": 0.1,
+"gain": 0,
+"diff": "Lätt: i centrala Funchal",
+"fee": "Ingen",
+"light": "Tidig morgon när blomsterförsäljarna packar upp.",
+"why": "Funchals saluhall med blomster- och fiskmarknad och azulejos på fasaden. Långt från din stil, men den ligger på din lista.",
+"tips": "Fiskhallen tidigt på morgonen är mörkast och mest stämningsfull.",
+"figure": false,
+"still": true,
+"shot": false,
+"status": "open",
+"statusNote": "Saluhall i stan, öppen som vanligt.",
+"src": "https://www.google.com/maps?q=32.64882,-16.90407",
+"stands": [],
+"cam": null
 },
 {
 "id": "ponta-do-bode",
@@ -7174,6 +7309,30 @@ SPOTS.push(...[
 "lat": 32.8459,
 "lon": -17.19458,
 "note": "Startplatsen. (OSM node 979629928)"
+},
+{
+"name": "Madre da Levada do Moinho",
+"lat": 32.81817,
+"lon": -17.20233,
+"note": "Levadans källa längst in i dalen. (Din nål i Google Maps)"
+},
+{
+"name": "PR7 vid Ribeira da Cruz",
+"lat": 32.82578,
+"lon": -17.20481,
+"note": "Leden genom skogen mot Junqueira. (Din nål i Google Maps)"
+},
+{
+"name": "Gamla kvarnen",
+"lat": 32.83785,
+"lon": -17.2049,
+"note": "Kvarnen och kvarnrännan. (Din nål i Google Maps)"
+},
+{
+"name": "Levada do Moinho, nedre delen",
+"lat": 32.84082,
+"lon": -17.20634,
+"note": "(Din nål i Google Maps)"
 }
 ],
 "cam": {
@@ -8320,3 +8479,918 @@ SPOTS.push(...[
 }
 }
 ]);
+const STIL = {
+"fanal": {
+"style": 5,
+"rating": 5,
+"styleNote": "förvridna lagerträd i dimma, kärnan i portfolion och perfekt kuliss"
+},
+"fanal-pr13": {
+"style": 5,
+"rating": 5,
+"styleNote": "samma tilträd i dimma från kanten, färre människor"
+},
+"queimadas": {
+"style": 4,
+"rating": 4,
+"styleNote": "mossig laurisilva och halmstugor, folklore men välbesökt"
+},
+"caldeirao": {
+"style": 5,
+"rating": 4,
+"styleNote": "högt fall i mörk kittel och tunnlar, men mycket folk"
+},
+"levada-rei": {
+"style": 5,
+"rating": 4,
+"styleNote": "mossig, orörd skogsgång med rötter och stenmurar, lugn"
+},
+"balcoes": {
+"style": 3,
+"rating": 3,
+"styleNote": "åsar i dis men vid vy och trångt med folk"
+},
+"rabacal": {
+"style": 5,
+"rating": 3,
+"styleNote": "mossiga väggar och Risco-fallet, men massturism kräver gryning"
+},
+"lagoa-vento": {
+"style": 5,
+"rating": 5,
+"styleNote": "högt fall över mörk damm bland lagerträd, lugnt"
+},
+"chao-louros": {
+"style": 4,
+"rating": 4,
+"styleNote": "lagerskog som rum nära bilen, mossiga stammar"
+},
+"estanquinhos": {
+"style": 4,
+"rating": 5,
+"styleNote": "grafiska stammar i tät dimma, helt folktomt"
+},
+"arieiro": {
+"style": 3,
+"rating": 2,
+"styleNote": "molnhav och ryggar, men fullt med folk vid gryning"
+},
+"ninho": {
+"style": 3,
+"rating": 3,
+"styleNote": "ryggar och led som förgrund, lugnare figurplats än toppen"
+},
+"ruivo": {
+"style": 4,
+"rating": 4,
+"styleNote": "brända, vindvridna trädskelett på väg upp i dimma"
+},
+"teixeira": {
+"style": 4,
+"rating": 4,
+"styleNote": "ensam basaltpelare över molnen, tydlig form för figur"
+},
+"bica-cana": {
+"style": 3,
+"rating": 3,
+"styleNote": "molnhav mot ryggarna, tomt men vid vy"
+},
+"paul-serra": {
+"style": 4,
+"rating": 4,
+"styleNote": "öde dimplatå för ensam figur, vindkraftverk stör"
+},
+"boca-corrida": {
+"style": 3,
+"rating": 3,
+"styleNote": "lagrade ryggar i motljus, mest utsikt"
+},
+"eira-serrado": {
+"style": 2,
+"rating": 2,
+"styleNote": "klassisk vid dalutsikt, turistbussar"
+},
+"sao-lourenco": {
+"style": 3,
+"rating": 2,
+"styleNote": "röd vulkansten och valv, men soligt, vitt och välbesökt"
+},
+"rosto": {
+"style": 2,
+"rating": 2,
+"styleNote": "solig kustutsikt från parkeringen"
+},
+"seixal": {
+"style": 3,
+"rating": 3,
+"styleNote": "svart sand mot molnklädda väggar, men badstrand"
+},
+"chao-ribeira": {
+"style": 5,
+"rating": 5,
+"styleNote": "dold dal med laurisilva, fall och övergivna stenhus"
+},
+"veu-noiva": {
+"style": 2,
+"rating": 2,
+"styleNote": "fall i havet sett på avstånd från utsikt"
+},
+"janela": {
+"style": 4,
+"rating": 4,
+"styleNote": "mörka havsstackar med fönster, lugn för figur"
+},
+"pr15": {
+"style": 5,
+"rating": 4,
+"styleNote": "tunnlar och djup laurisilva i vild dal, få besökare"
+},
+"achadas": {
+"style": 4,
+"rating": 4,
+"styleNote": "övergivna stenhus under jättestup, glömd plats"
+},
+"pargo": {
+"style": 2,
+"rating": 2,
+"styleNote": "fyr och solnedgångsklippor, inte stilen"
+},
+"guindaste": {
+"style": 2,
+"rating": 2,
+"styleNote": "glasplattform med vid kustvy"
+},
+"larano": {
+"style": 3,
+"rating": 3,
+"styleNote": "klippstig och stup mot havet, kustvy mest"
+},
+"anjos": {
+"style": 2,
+"rating": 2,
+"styleNote": "fall över väg, turistiskt och soligt"
+},
+"monte-palace": {
+"style": 1,
+"rating": 1,
+"styleNote": "trädgård, blommor och turister"
+},
+"palheiro": {
+"style": 1,
+"rating": 1,
+"styleNote": "engelsk trädgård, saknar mörker och kuliss"
+},
+"botanico": {
+"style": 1,
+"rating": 1,
+"styleNote": "rabatter och blommor, inget för stilen"
+},
+"ponte-ametade": {
+"style": 5,
+"rating": 5,
+"styleNote": "mossig valvbro i lagerskog, ren sagokuliss för figur"
+},
+"caldeirao-inferno": {
+"style": 5,
+"rating": 5,
+"styleNote": "mörk smal kittel med fall och våt sten"
+},
+"agua-dalto": {
+"style": 4,
+"rating": 4,
+"styleNote": "högt fall i fuktig ravin, vild levada"
+},
+"picaroto": {
+"style": 3,
+"rating": 3,
+"styleNote": "utsikt över lagerskog och molnhav, vid vy"
+},
+"paredao": {
+"style": 3,
+"rating": 3,
+"styleNote": "lagrade toppar ner i dalen, mest utsikt"
+},
+"faja-dos-cardos": {
+"style": 3,
+"rating": 3,
+"styleNote": "instängd by med vinpressruiner, mer vy än rum"
+},
+"cruzinhas": {
+"style": 2,
+"rating": 2,
+"styleNote": "utsiktsplatser med kors, vid dalvy"
+},
+"cova-da-roda": {
+"style": 2,
+"rating": 2,
+"styleNote": "vid kustvy mot Penha de Águia"
+},
+"cabeco-resto": {
+"style": 2,
+"rating": 2,
+"styleNote": "lugna dalvyer, saknar tydlig form"
+},
+"moinho-sao-jorge": {
+"style": 2,
+"rating": 2,
+"styleNote": "gammal kvarn för detaljer, ingen stämning"
+},
+"boca-das-voltas": {
+"style": 3,
+"rating": 3,
+"styleNote": "skog med rastplats och kustvy"
+},
+"empenas": {
+"style": 2,
+"rating": 2,
+"styleNote": "vägkantsutsikt mot ryggar"
+},
+"lombo-do-pico": {
+"style": 2,
+"rating": 2,
+"styleNote": "bred dalutsikt, inget rum för figur"
+},
+"igreja-sao-jorge": {
+"style": 2,
+"rating": 2,
+"styleNote": "barockkyrka i by, inte siluettkyrka"
+},
+"quinta-furao-faias": {
+"style": 3,
+"rating": 3,
+"styleNote": "hotellruin på klippkant, resten vinrankor och kustvy"
+},
+"solar-aposento": {
+"style": 2,
+"rating": 2,
+"styleNote": "herrgård, lantligt men utan dramatik"
+},
+"lameiros-rota-da-cal": {
+"style": 2,
+"rating": 2,
+"styleNote": "kalkugn och fossiler, sten utan stämning"
+},
+"vale-sao-vicente": {
+"style": 3,
+"rating": 3,
+"styleNote": "brant dal där moln rinner ner"
+},
+"faja-da-areia": {
+"style": 2,
+"rating": 2,
+"styleNote": "stenstrand och klippor utan grotta"
+},
+"pico-grande": {
+"style": 4,
+"rating": 4,
+"styleNote": "klippig topp i massivet, dimma och få människor"
+},
+"beira-da-quinta": {
+"style": 2,
+"rating": 2,
+"styleNote": "grön kustvy i lager, vykort"
+},
+"cascatas-ponta-delgada": {
+"style": 5,
+"rating": 5,
+"styleNote": "okända fall i mossiga raviner, helt tomt"
+},
+"encumeada": {
+"style": 4,
+"rating": 4,
+"styleNote": "moln rinner över åsen, fuktig lagerskog vid parkeringen"
+},
+"terra-grande": {
+"style": 3,
+"rating": 3,
+"styleNote": "lodräta dalväggar med molnlager"
+},
+"pico-escalvado": {
+"style": 4,
+"rating": 4,
+"styleNote": "ryggar utan folk, ljunghed som förgrund för figur"
+},
+"poco-neve": {
+"style": 4,
+"rating": 4,
+"styleNote": "stenkupol i dimma, folklorekuliss"
+},
+"ribeiro-frio": {
+"style": 4,
+"rating": 3,
+"styleNote": "mossiga murar och skogskapell, men turisttätt"
+},
+"curral-freiras": {
+"style": 2,
+"rating": 2,
+"styleNote": "by i dalen, kastanjer men mest vy"
+},
+"faja-nogueira": {
+"style": 5,
+"rating": 5,
+"styleNote": "skogsdal med fall och stenhus som skogen tagit"
+},
+"palheiro-marques": {
+"style": 3,
+"rating": 3,
+"styleNote": "äkta halmlada i bondby, folklore utan dramatik"
+},
+"santana-casas": {
+"style": 2,
+"rating": 1,
+"styleNote": "turistiska halmhus med blommor"
+},
+"rocha-navio": {
+"style": 3,
+"rating": 3,
+"styleNote": "svart stup och små fall, kustvy"
+},
+"calhau-sao-jorge": {
+"style": 4,
+"rating": 3,
+"styleNote": "sockerbruksruiner vid svart strand, sol och inget dis"
+},
+"farol-sao-jorge": {
+"style": 2,
+"rating": 2,
+"styleNote": "fyr på udde, vid kustvy"
+},
+"arco-sao-jorge": {
+"style": 2,
+"rating": 2,
+"styleNote": "kustutsikt i lager, vykort"
+},
+"roseiral-arco": {
+"style": 1,
+"rating": 1,
+"styleNote": "rosenträdgård, raka motsatsen till stilen"
+},
+"ponta-delgada-kyrka": {
+"style": 3,
+"rating": 3,
+"styleNote": "kyrkogård mot lavakust och bränning, mörk ton"
+},
+"sao-cristovao": {
+"style": 4,
+"rating": 3,
+"styleNote": "övergiven väg vid stup och kyrkogård, ödsligt men soligt"
+},
+"ponta-do-bode": {
+"style": 4,
+"rating": 4,
+"styleNote": "röda vulkanväggar och valv, stark textur för figur"
+},
+"ribeira-do-natal": {
+"style": 4,
+"rating": 3,
+"styleNote": "skiktad röd vägg som textur, solig kust"
+},
+"miradouro-curtado": {
+"style": 2,
+"rating": 2,
+"styleNote": "klassisk vid vy över udden"
+},
+"pico-caldeira": {
+"style": 3,
+"rating": 3,
+"styleNote": "klipptopp ofta i moln, mest kustvy"
+},
+"bons-caminhos": {
+"style": 2,
+"rating": 2,
+"styleNote": "hög utsikt över by och udde"
+},
+"lombo-palheiros": {
+"style": 2,
+"rating": 2,
+"styleNote": "utsikt mot Penha de Águia, vykort"
+},
+"capela-penha-franca-faial": {
+"style": 4,
+"rating": 4,
+"styleNote": "kapell uthugget i klippa, tydlig plats för figur"
+},
+"forte-boa-vontade": {
+"style": 2,
+"rating": 2,
+"styleNote": "dalutsikt, grottan intill är enda pluset"
+},
+"grutas-cavalum": {
+"style": 4,
+"rating": 4,
+"styleNote": "mossiga lavagrottor, mörkt och uråldrigt"
+},
+"ilheu-santa-catarina": {
+"style": 3,
+"rating": 3,
+"styleNote": "svart klipptorn som siluett vid gryning"
+},
+"ribeira-primeira": {
+"style": 4,
+"rating": 4,
+"styleNote": "mossig skog med dammar i dimma"
+},
+"miradouro-queimada": {
+"style": 2,
+"rating": 1,
+"styleNote": "östkustutsikt med flygplatsen i bild"
+},
+"tem-te-nao-caias": {
+"style": 2,
+"rating": 2,
+"styleNote": "geologi i grön dal, svag stämning"
+},
+"terra-do-baptista": {
+"style": 2,
+"rating": 2,
+"styleNote": "sällsynt sten, få bildmässiga former"
+},
+"levada-nova-madre-dagua": {
+"style": 4,
+"rating": 4,
+"styleNote": "små mossiga fall, lugnt och okänt"
+},
+"levada-serra-faial-aboboreiras": {
+"style": 4,
+"rating": 5,
+"styleNote": "skogslevada i nästan ständig dimma, folktom"
+},
+"furado-fall-pr10": {
+"style": 4,
+"rating": 4,
+"styleNote": "fall över trappor i mörk mossig skog"
+},
+"moinho-do-abel": {
+"style": 2,
+"rating": 2,
+"styleNote": "stenkvarn för detaljer"
+},
+"moinho-antonio-vieira": {
+"style": 2,
+"rating": 2,
+"styleNote": "kvarn i by, dimma men ingen kuliss"
+},
+"pr5-funduras": {
+"style": 5,
+"rating": 5,
+"styleNote": "mossig skogsgång i drivande dimma, ingen där"
+},
+"lamaceiros": {
+"style": 4,
+"rating": 4,
+"styleNote": "gamla träd, damm och mossa i moln"
+},
+"castelejo": {
+"style": 4,
+"rating": 4,
+"styleNote": "trång, fuktig dal med fall och stup"
+},
+"penha-aguia": {
+"style": 3,
+"rating": 3,
+"styleNote": "klippkant och skog på toppen, mest vy"
+},
+"alagoa": {
+"style": 3,
+"rating": 2,
+"styleNote": "svart strand och skorsten, solig bad"
+},
+"maiata": {
+"style": 3,
+"rating": 3,
+"styleNote": "avskild stenstrand med stentorn, saknar grotta"
+},
+"faial-bro": {
+"style": 2,
+"rating": 2,
+"styleNote": "stenbro och fort, vykortsmotiv"
+},
+"portela": {
+"style": 3,
+"rating": 3,
+"styleNote": "moln väller över passet, vägkapell"
+},
+"boca-risco": {
+"style": 3,
+"rating": 3,
+"styleNote": "vild klippskåra mot havet, folktom men solig"
+},
+"pico-facho": {
+"style": 2,
+"rating": 2,
+"styleNote": "soluppgångsutsikt över bukt"
+},
+"prainha": {
+"style": 2,
+"rating": 2,
+"styleNote": "sandstrand, kapellet på röd kulle räddar lite"
+},
+"santo-serra-quinta": {
+"style": 2,
+"rating": 2,
+"styleNote": "herrgårdspark och kamelior, dimma hjälper lite"
+},
+"levada-canical": {
+"style": 1,
+"rating": 1,
+"styleNote": "solig blomsterlevada, inget mörker"
+},
+"boca-dos-namorados": {
+"style": 3,
+"rating": 3,
+"styleNote": "dimma över kanten, men vid dalutsikt"
+},
+"faja-das-galinhas": {
+"style": 4,
+"rating": 4,
+"styleNote": "övergiven, bränd by som naturen tar tillbaka"
+},
+"terreiro-da-luta": {
+"style": 3,
+"rating": 3,
+"styleNote": "gåtfullt monument i dimmig skog"
+},
+"pico-alto-funchal": {
+"style": 2,
+"rating": 2,
+"styleNote": "topp med stad och hav nedanför"
+},
+"parque-ecologico-funchal": {
+"style": 5,
+"rating": 5,
+"styleNote": "ensamma och döda träd i nästan ständig dimma"
+},
+"salto-do-patagarro": {
+"style": 5,
+"rating": 5,
+"styleNote": "trestegsfall i mossig, vild ravin"
+},
+"montado-do-pereiro": {
+"style": 4,
+"rating": 4,
+"styleNote": "stammar i rader i dimma, mossig mark"
+},
+"capela-vera-cruz": {
+"style": 3,
+"rating": 2,
+"styleNote": "ensamt kapell men solig sydkust"
+},
+"lido-forja": {
+"style": 2,
+"rating": 1,
+"styleNote": "lavaklippor vid stadspromenaden"
+},
+"pico-dos-barcelos": {
+"style": 1,
+"rating": 1,
+"styleNote": "stadsutsikt över Funchal"
+},
+"capela-das-preces": {
+"style": 2,
+"rating": 2,
+"styleNote": "kapell och stadsutsikt"
+},
+"capela-esperanca-ruin": {
+"style": 4,
+"rating": 4,
+"styleNote": "kapellruin i skog, övergiven sten"
+},
+"levada-tornos-pisao": {
+"style": 3,
+"rating": 3,
+"styleNote": "fall vid gammal bro, grönt men lågt"
+},
+"levada-tornos-porto-novo": {
+"style": 3,
+"rating": 3,
+"styleNote": "små fall och ormbunkar längs kanalen"
+},
+"levada-do-canico": {
+"style": 3,
+"rating": 2,
+"styleNote": "grotta och fall, men låglänt och soligt"
+},
+"levada-da-azenha": {
+"style": 2,
+"rating": 1,
+"styleNote": "kort ravinpromenad nära stan"
+},
+"madre-de-deus": {
+"style": 2,
+"rating": 2,
+"styleNote": "gammalt kapell i bebyggelse"
+},
+"contenda-gaula": {
+"style": 2,
+"rating": 2,
+"styleNote": "soluppgångsvy mot öster, vykort"
+},
+"quinta-jardim-da-serra": {
+"style": 2,
+"rating": 2,
+"styleNote": "herrgård och trädgård, dimma hjälper lite"
+},
+"cabo-girao": {
+"style": 2,
+"rating": 1,
+"styleNote": "skywalk och turistmassor, vid havsvy"
+},
+"faja-dos-padres": {
+"style": 2,
+"rating": 2,
+"styleNote": "badfajã med restaurang, soligt"
+},
+"camara-de-lobos": {
+"style": 1,
+"rating": 1,
+"styleNote": "hamn med färgade båtar"
+},
+"doca-do-cavacas": {
+"style": 2,
+"rating": 2,
+"styleNote": "lavaklippor och tunnel mitt i badstaden"
+},
+"lazareto": {
+"style": 2,
+"rating": 2,
+"styleNote": "havsklippor och stad i kvällsljus"
+},
+"zona-velha": {
+"style": 1,
+"rating": 1,
+"styleNote": "stadsmiljö och målade dörrar"
+},
+"quinta-das-cruzes": {
+"style": 2,
+"rating": 2,
+"styleNote": "trädgård, mossiga gravstenar enda pluset"
+},
+"santa-catarina": {
+"style": 1,
+"rating": 1,
+"styleNote": "stadspark med palmer"
+},
+"babosas": {
+"style": 3,
+"rating": 3,
+"styleNote": "dimmig ravin och kapell, men turistområde"
+},
+"jardins-do-imperador": {
+"style": 2,
+"rating": 2,
+"styleNote": "övervuxen quinta, melankoli men trädgård"
+},
+"levada-dos-tornos-hortensia": {
+"style": 2,
+"rating": 2,
+"styleNote": "trädgårdslevada med tehus"
+},
+"garajau-cristo-rei": {
+"style": 2,
+"rating": 2,
+"styleNote": "statyn på udde, turistisk soluppgång"
+},
+"capela-das-neves": {
+"style": 2,
+"rating": 2,
+"styleNote": "kapell vid kanten med stadsutsikt"
+},
+"reis-magos": {
+"style": 1,
+"rating": 1,
+"styleNote": "strandpromenad och bad"
+},
+"ponta-do-sol": {
+"style": 1,
+"rating": 1,
+"styleNote": "by, pir och gyllene kvällsljus"
+},
+"madalena-do-mar": {
+"style": 2,
+"rating": 1,
+"styleNote": "by och bananodlingar vid stenstrand"
+},
+"capela-da-gloria": {
+"style": 3,
+"rating": 3,
+"styleNote": "kapell på havsklippa, tomt men soligt"
+},
+"porto-moniz-lava": {
+"style": 2,
+"rating": 1,
+"styleNote": "turistiska lavapooler"
+},
+"ribeira-brava-kust": {
+"style": 1,
+"rating": 1,
+"styleNote": "stadsstrand"
+},
+"levada-nova-ponta-sol": {
+"style": 5,
+"rating": 4,
+"styleNote": "gå bakom vattenridån, figur bakom fallet"
+},
+"faja-rodrigues": {
+"style": 5,
+"rating": 5,
+"styleNote": "tunnlar, mossig ravin och fall i mörk skog"
+},
+"calhau-da-lapa": {
+"style": 4,
+"rating": 4,
+"styleNote": "grotthus i klippan vid avlägsen vik"
+},
+"agua-dalto-runda2": {
+"style": 3,
+"rating": 3,
+"styleNote": "högt fall på grön vägg vid vägen"
+},
+"lombada-marinheiros": {
+"style": 2,
+"rating": 2,
+"styleNote": "solnedgångsklippor och terrasser"
+},
+"raposeira": {
+"style": 2,
+"rating": 2,
+"styleNote": "solnedgångsutsikt över Paul do Mar"
+},
+"loreto-capela": {
+"style": 2,
+"rating": 2,
+"styleNote": "manuelinsk portal, men i bebyggd kust"
+},
+"lugar-de-baixo": {
+"style": 2,
+"rating": 2,
+"styleNote": "marinaruin och stenstrand, solig kust"
+},
+"lombo-do-mouro": {
+"style": 4,
+"rating": 4,
+"styleNote": "lagrade ryggar och dimma som rullar över kanten"
+},
+"folhadal": {
+"style": 5,
+"rating": 5,
+"styleNote": "gammal lagerskog med mossa och fall i moln"
+},
+"feiteiras": {
+"style": 4,
+"rating": 4,
+"styleNote": "gamla träd och mossa i molnig dal"
+},
+"palha-carga": {
+"style": 4,
+"rating": 4,
+"styleNote": "ljunghed och vulkankägla i dimma"
+},
+"levada-cedros": {
+"style": 5,
+"rating": 5,
+"styleNote": "fall i flera steg i dimmig lagerskog"
+},
+"levada-moinho": {
+"style": 4,
+"rating": 4,
+"styleNote": "stilla skogslevada med gamla kvarnar"
+},
+"grutas-sao-vicente": {
+"style": 2,
+"rating": 2,
+"styleNote": "upplyst turistgrotta, ingen figurplats"
+},
+"sao-vicente-vila": {
+"style": 1,
+"rating": 1,
+"styleNote": "kullersten och vita hus"
+},
+"espigao": {
+"style": 2,
+"rating": 2,
+"styleNote": "lugn dalutsikt"
+},
+"piarro": {
+"style": 1,
+"rating": 1,
+"styleNote": "flygbild över hamn och kust"
+},
+"faja-da-ovelha": {
+"style": 2,
+"rating": 2,
+"styleNote": "bykapell bland terrasser"
+},
+"capela-da-vida": {
+"style": 2,
+"rating": 2,
+"styleNote": "litet kapell i solig fajã"
+},
+"esmeraldos": {
+"style": 2,
+"rating": 2,
+"styleNote": "kapell och herrgård i by"
+},
+"chamine-estreito": {
+"style": 3,
+"rating": 3,
+"styleNote": "övergiven skorsten, förfall men solig terrass"
+},
+"sv-capelinha-calhau": {
+"style": 3,
+"rating": 2,
+"styleNote": "kapell i lavaklippa vid väg och turister"
+},
+"sv-fatima-capela": {
+"style": 4,
+"rating": 4,
+"styleNote": "ensamt kapell som siluett mot åsar i dis"
+},
+"cristo-rei-paul": {
+"style": 4,
+"rating": 4,
+"styleNote": "ensam staty som dyker upp i dimman"
+},
+"ruivo-paul": {
+"style": 3,
+"rating": 3,
+"styleNote": "molnhav under, vid platåvy"
+},
+"dona-beja": {
+"style": 5,
+"rating": 5,
+"styleNote": "mörk göl under fall i mossig ravin, lugnt"
+},
+"fonte-bispo": {
+"style": 4,
+"rating": 4,
+"styleNote": "vindpinade träd och ljung på platåkanten"
+},
+"ponta-tristao": {
+"style": 2,
+"rating": 2,
+"styleNote": "öppna havsklippor, vid vy"
+},
+"santinha-moniz": {
+"style": 2,
+"rating": 2,
+"styleNote": "hög utsikt över lavakust"
+},
+"boa-morte": {
+"style": 3,
+"rating": 3,
+"styleNote": "ensamt kapell på klippkant, mycket himmel"
+},
+"garganta-funda": {
+"style": 4,
+"rating": 4,
+"styleNote": "smalt fall i djup, mörk ravin"
+},
+"pargo-fio": {
+"style": 2,
+"rating": 2,
+"styleNote": "gyllene klippor och betesmark, vykort"
+},
+"massapez-precipicio": {
+"style": 2,
+"rating": 2,
+"styleNote": "stup över fiskeby, vid kustvy"
+},
+"paul-do-mar": {
+"style": 1,
+"rating": 1,
+"styleNote": "fiskehamn"
+},
+"jardim-do-mar": {
+"style": 1,
+"rating": 1,
+"styleNote": "bilfri by och strand"
+},
+"reis-magos-vast": {
+"style": 2,
+"rating": 2,
+"styleNote": "gammalt kapell bland hus"
+},
+"hemlig-fanal": {
+"style": 5,
+"rating": 5,
+"styleNote": "din egen nål: Fanals lagerträd i dimma, utan folk"
+},
+"skogsparti-pereiro": {
+"style": 4,
+"rating": 4,
+"styleNote": "din egen nål i dimbältet ovanför Funchal"
+},
+"agua-dalto-faial": {
+"style": 4,
+"rating": 4,
+"styleNote": "högt fall mot mörk klippa i grön ravin"
+},
+"mercado-lavradores": {
+"style": 1,
+"rating": 1,
+"styleNote": "saluhall i stan, långt från stilen"
+}
+};
+for (const s of SPOTS) if (STIL[s.id]) Object.assign(s, STIL[s.id]);
+const MINE = {"porto-moniz-lava": "", "faja-rodrigues": "", "ponta-do-bode": "", "anjos": "", "sao-lourenco": "Din anteckning: gå hela vägen upp till sista krönet för utsikten över drakens svans.", "calhau-sao-jorge": "", "paredao": "", "rosto": "", "doca-do-cavacas": "", "levada-nova-ponta-sol": "", "janela": "", "ruivo": "Din anteckning: hajk Pico till Pico.", "achadas": "", "esmeraldos": "", "seixal": "Din anteckning: svart strand.", "eira-serrado": "", "faja-dos-padres": "", "arieiro": "Din anteckning: hajk Pico till Pico.", "fanal": "", "ninho": "", "rabacal": "Din anteckning: stämningsfull skog och två vattenfall, lång tunnel på slutet.", "lagoa-vento": "", "queimadas": "", "caldeirao-inferno": "", "curral-freiras": "", "caldeirao": "", "babosas": "", "boca-risco": "", "ribeiro-frio": "", "levada-moinho": "", "chao-ribeira": "", "hemlig-fanal": "", "skogsparti-pereiro": "", "agua-dalto-faial": "", "mercado-lavradores": ""};
+for (const s of SPOTS) if (s.id in MINE) { s.mine = true; s.mineNote = MINE[s.id]; }

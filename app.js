@@ -28,7 +28,7 @@ const store = { get(k, d) { try { const v = localStorage.getItem("fk_" + k); ret
 const st = {
   cats: new Set(store.get("cats", Object.keys(CATS))),
   day: 1, slot: "rise", acc: store.get("acc", "any"),
-  hideClosed: store.get("hideClosed", true), onlyGood: false, q: "", sel: null, wx: null,
+  hideClosed: store.get("hideClosed", true), mineOnly: store.get("mineOnly", false), minR: store.get("minR", "0"), onlyGood: false, q: "", sel: null, wx: null,
 };
 
 // ── karta ──
@@ -37,13 +37,13 @@ L.control.scale({ imperial: false, position: "bottomright" }).addTo(map);
 // CARTO-nyckel (gratisnivå, får ligga publikt enligt Sebastian 2026-11-21)
 const CARTO_KEY = "cb1_5ddx_1_b2bc9a882ba6667facbb099a";
 const BASES = {
-  streets: { n: "Gator", sw: "linear-gradient(135deg,#f2efe9,#cfe3c4)", l: () => L.tileLayer("https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?api_key=" + CARTO_KEY, { maxZoom: 20, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
+  streets: { n: "Gator", sw: "linear-gradient(135deg,#f2efe9,#cfe3c4)", l: () => L.tileLayer("https://basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png?key=" + CARTO_KEY, { maxZoom: 20, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
   osm: { n: "OSM", sw: "linear-gradient(135deg,#f2efe9,#f4c99b)", l: () => L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: "© OpenStreetMap" }) },
   topo: { n: "Terräng", sw: "linear-gradient(135deg,#c9d3b0,#e9e2c7)", l: () => L.tileLayer("https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png", { maxZoom: 17, attribution: "© OpenStreetMap, SRTM | OpenTopoMap" }) },
   sat:  { n: "Satellit", sw: "linear-gradient(135deg,#253523,#5c6b4a)", l: () => L.layerGroup([
           L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", { maxZoom: 19, attribution: "Esri World Imagery" }),
-          L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png?api_key=" + CARTO_KEY, { maxZoom: 19, subdomains: "abcd" })]) },
-  dark: { n: "Mörk", sw: "linear-gradient(135deg,#0b1218,#26323b)", l: () => L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?api_key=" + CARTO_KEY, { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
+          L.tileLayer("https://basemaps.cartocdn.com/dark_only_labels/{z}/{x}/{y}{r}.png?key=" + CARTO_KEY, { maxZoom: 19, subdomains: "abcd" })]) },
+  dark: { n: "Mörk", sw: "linear-gradient(135deg,#0b1218,#26323b)", l: () => L.tileLayer("https://basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=" + CARTO_KEY, { maxZoom: 19, subdomains: "abcd", attribution: "© OpenStreetMap © CARTO" }) },
 };
 let baseKey = store.get("base", "topo"), baseLayer = null;
 function setBase(k) { if (baseLayer) map.removeLayer(baseLayer); baseKey = k; baseLayer = BASES[k].l().addTo(map); store.set("base", k);
@@ -133,21 +133,23 @@ const walkTxt = (s) => s.mode === "car" ? "Bil ända fram" : `${s.walk} min gån
 // ── chips ──
 function renderChips() {
   const all = st.cats.size === Object.keys(CATS).length;
-  $("#chips").innerHTML = `<button class="chip all ${all ? "on" : ""}" data-k="*">Alla<span class="n">${SPOTS.length}</span></button>` + Object.entries(CATS).map(([k, c]) => {
+  $("#chips").innerHTML = `<button class="chip all ${all ? "on" : ""}" data-k="*">Alla<span class="n">${SPOTS.length}</span></button>`
+    + `<button class="chip mine ${st.mineOnly ? "on" : ""}" data-k="mine"><span class="dot"></span>Mina<span class="n">${SPOTS.filter((s) => s.mine).length}</span></button>` + Object.entries(CATS).map(([k, c]) => {
     const n = SPOTS.filter((s) => s.cat === k).length;
     return `<button class="chip ${st.cats.has(k) ? "" : "off"}" data-k="${k}" style="--c:var(${c.c})"><span class="dot">${svg(k)}</span>${c.n}<span class="n">${n}</span></button>`;
   }).join("");
 }
 $("#chips").onclick = (e) => { const b = e.target.closest(".chip"); if (!b) return; const k = b.dataset.k;
+  if (k === "mine") { st.mineOnly = !st.mineOnly; store.set("mineOnly", st.mineOnly); renderChips(); render(); return; }
   if (k === "*") st.cats = new Set(Object.keys(CATS));
   else if (st.cats.size === Object.keys(CATS).length) { st.cats = new Set([k]); } else if (st.cats.has(k)) { st.cats.delete(k); if (!st.cats.size) st.cats = new Set(Object.keys(CATS)); } else st.cats.add(k);
   store.set("cats", [...st.cats]); renderChips(); render(); };
 
 function segs() {
-  for (const [id, key] of [["#day", "day"], ["#slot", "slot"], ["#acc", "acc"]]) {
+  for (const [id, key] of [["#day", "day"], ["#slot", "slot"], ["#acc", "acc"], ["#minR", "minR"]]) {
     const el = $(id); el.querySelectorAll("button").forEach((b) => b.classList.toggle("on", String(st[key]) === b.dataset.v));
     el.onclick = (e) => { const b = e.target.closest("button"); if (!b) return; st[key] = key === "day" ? +b.dataset.v : b.dataset.v;
-      if (key === "acc") store.set("acc", st.acc); segs(); renderSun(); render(); if (st.sel) openCard(st.sel); };
+      if (key === "acc" || key === "minR") store.set(key, st[key]); segs(); renderSun(); render(); if (st.sel) openCard(st.sel); };
   }
 }
 $("#hideClosed").checked = st.hideClosed;
@@ -159,7 +161,7 @@ $("#qClear").onclick = () => { $("#q").value = ""; st.q = ""; $("#qClear").hidde
 // ── markörer och lista ──
 const layer = L.layerGroup().addTo(map); const markers = {};
 function visible() {
-  return SPOTS.filter((s) => st.cats.has(s.cat) && accOK(s) && !(st.hideClosed && s.status === "closed")
+  return SPOTS.filter((s) => st.cats.has(s.cat) && accOK(s) && ratingOf(s) >= +st.minR && (!st.mineOnly || s.mine) && !(st.hideClosed && s.status === "closed")
     && (!st.q || (s.name + " " + s.why).toLowerCase().includes(st.q))
     && (!st.onlyGood || (judge(s) || {}).k === "good"));
 }
@@ -175,7 +177,7 @@ function render() {
       const j = judge(s), d = 18 + ratingOf(s) * 2.5;
       const ring = s.status === "closed" ? "var(--closed)" : j ? `var(--${j.k})` : "var(--ink)";
       const icon = L.divIcon({ className: "pinwrap", iconSize: [d, d],
-        html: `<div class="pin${s.status === "closed" ? " closed" : ""}" data-id="${s.id}" style="--c:var(${CATS[s.cat].c});--r:${ring};width:${d}px;height:${d}px">${svg(s.cat)}</div>` });
+        html: `<div class="pin${s.status === "closed" ? " closed" : ""}${s.mine ? " mine" : ""}" data-id="${s.id}" style="--c:var(${CATS[s.cat].c});--r:${ring};width:${d}px;height:${d}px">${svg(s.cat)}</div>` });
       const m = L.marker([s.lat, s.lon], { icon, riseOnHover: true, zIndexOffset: ratingOf(s) * 100, keyboard: true, title: s.name })
         .bindTooltip(() => tipHtml(s), { className: "tip", direction: "top", offset: [0, -d / 2], opacity: 1 })
         .on("mouseover", () => loadThumb(s).then(() => m.isTooltipOpen() && m.setTooltipContent(tipHtml(s))))
@@ -207,7 +209,8 @@ function openCard(id) {
   const slotName = { rise: "soluppgång", mid: "kl 10", set: "solnedgång" }[st.slot], dayName = ["idag", "i morgon", "i övermorgon"][st.day];
   $("#card").innerHTML = `<button class="x" aria-label="Stäng">×</button><div class="body" style="--c:var(${CATS[s.cat].c})">
     <div><div class="kind">${svg(s.cat)}${CATS[s.cat].n} · ${s.ele} m ö.h.</div><h2>${s.name}</h2>
-      <div class="rate">${stars(ratingOf(s))}<span class="small">${s.rating ? "betygsatt för hand" : "uppskattat från stilmatch och lugn"}</span></div></div>
+      <div class="rate">${stars(ratingOf(s))}<span class="small">${s.styleNote ? s.styleNote : s.rating ? "betygsatt för hand" : "uppskattat från stilmatch och lugn"}</span></div></div>
+      ${s.mine ? `<p class="mine-line">På din lista i Google Maps${s.mineNote ? ". " + s.mineNote : ""}</p>` : ""}
     <div class="gal" id="gal"><span class="ph"></span><span class="ph"></span><span class="ph"></span></div>
     <p class="why" style="margin:0">${s.why}</p>
     ${s.stands && s.stands.length ? `<div><h3>Fotopunkter</h3><div class="standlist">${s.stands.map((p, i) =>
@@ -272,7 +275,7 @@ function tipHtml(s) {
   return `<div class="tipc" style="--c:var(${CATS[s.cat].c})">
     ${t ? `<img src="${t}" alt="">` : t === "" ? "" : `<span class="tph"></span>`}
     <div class="tipb"><b>${s.name}</b>
-      <span class="tag">${svg(s.cat)}${CATS[s.cat].n}</span>
+      <span class="tag">${svg(s.cat)}${CATS[s.cat].n}${s.mine ? ' · <i class="mtag">din plats</i>' : ""}</span>
       <span class="tipr">${stars(ratingOf(s))}${s.status === "closed" || s.status === "partial" ? `<span class="pill ${sk}">${stxt}</span>` : j ? `<span class="pill ${j.k}">${j.t}</span>` : ""}</span></div></div>`;
 }
 
@@ -297,13 +300,19 @@ $("#lb").addEventListener("touchend", (e) => { if (tx == null) return; const dx 
   if (Math.abs(dx) > 50) lbShow(lbN + (dx < 0 ? 1 : -1)); });
 
 // Förhandsbilder: geotaggade foton från Wikimedia Commons nära platsen och dess fotopunkter
-const galCache = {};
+const galCache = {}; let curP;
+const curated = () => (curP ||= fetch("galleries.json?v=10").then((r) => r.json()).catch(() => ({})));
 async function loadGallery(s, silent) {
   const el = () => (st.sel === s.id ? $("#gal") : null);
   if (!galCache[s.id]) galCache[s.id] = (async () => {
+    // Förvalda bilder från bildval.py, rankade efter vad platsen är till för; live-sökning bara som reserv
+    const pick = (await curated())[s.id];
+    if (pick && pick.length) return pick.map(([fn, hd, w]) => { const e = encodeURIComponent(fn), base = "https://upload.wikimedia.org/wikipedia/commons/";
+      const th = (px) => (w > px ? `${base}thumb/${hd}/${e}/${px}px-${e}` : base + hd + "/" + e);
+      return { src: th(500), big: th(1920), page: "https://commons.wikimedia.org/wiki/File:" + e, t: fn.replace(/_/g, " ").replace(/\.\w+$/, "") }; });
     const pts = [[s.lat, s.lon], ...(s.stands || []).slice(0, 2).map((p) => [p.lat, p.lon])];
     const seen = new Set(), out = [];
-    const cached = store.get("gal_" + s.id, null);
+    const cached = store.get("gal2_" + s.id, null);
     if (cached && Date.now() - cached.at < 7 * 864e5) return cached.imgs;
     const res = await Promise.all(pts.map(async ([la, lo]) => {
       const q = new URLSearchParams({ action: "query", generator: "geosearch", ggscoord: `${la}|${lo}`, ggsradius: "700", ggslimit: "30",
@@ -317,7 +326,7 @@ async function loadGallery(s, silent) {
       const big = ii.width > 1800 ? ii.thumburl.replace(/\/\d+px-/, "/1800px-") : ii.url;
       out.push({ src: ii.thumburl, big, page: ii.descriptionurl, t: pg.title.replace(/^File:|\.\w+$/g, "") });
     }
-    if (out.length) store.set("gal_" + s.id, { at: Date.now(), imgs: out.slice(0, 14) });
+    if (out.length) store.set("gal2_" + s.id, { at: Date.now(), imgs: out.slice(0, 14) });
     return out.slice(0, 14);
   })();
   const imgs = await galCache[s.id]; if (silent) return imgs; const g = el(); if (!g) return imgs;
@@ -342,7 +351,7 @@ map.on("locationerror", () => { $("#wxMsg").textContent = "Kunde inte hämta din
 
 $("#infoBody").innerHTML = `
   <h4>Variablerna</h4>
-  <p><b>Stilmatch</b> (prickarna): hur väl platsen passar din stil enligt brand.md: dimma, mossa, sten, uråldrig natur och folklore, eller pelare 2 med blommor och gyllene ljus.</p>
+  <p><b>Stilmatch och betyg</b>: hur väl platsen passar det du faktiskt fotograferar, utläst ur portfolion: dimskog och förvridna lagerträd, vattenfall i mörk sten, döda träd, ruiner och kyrktak, platser som fungerar som kuliss för en figur. Sol, kustpanoramor och trädgårdar ligger lågt. Varje plats har en kort motivering under betyget.</p>
   <p><b>Dimchans</b>: hur ofta platsen ligger i moln. Laurisilva-zonen på norrsidan (500–1200 m) är dimmigast.</p>
   <p><b>Lugn</b>: hur tomt det brukar vara. 5 betyder nästan ensam.</p>
   <p><b>Tillgänglighet</b>: 5 = bil ända fram, 1 = lång vandring.</p>
