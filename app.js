@@ -19,6 +19,8 @@ const CATS = {
   flower: { n: "Blommor och trädgårdar", c: "--c-flower" },
 };
 // Betyg 1–5 som på skatekartan. Satt för hand (s.rating) eller uppskattat från stilmatch och hur lugnt det är.
+// Öppnar punkten i Google Maps (appen på mobilen)
+const gmaps = (la, lo) => `https://www.google.com/maps/search/?api=1&query=${la},${lo}`;
 const ratingOf = (s) => s.rating || Math.max(1, Math.min(5, Math.round(s.style + (s.calm >= 4 ? 0.4 : s.calm <= 1 ? -0.6 : 0))));
 const stars = (n) => `<span class="stars">${"●".repeat(n)}<i>${"●".repeat(5 - n)}</i></span>`;
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
@@ -214,7 +216,7 @@ function openCard(id) {
     <div class="gal" id="gal"><span class="ph"></span><span class="ph"></span><span class="ph"></span></div>
     <p class="why" style="margin:0">${s.why}</p>
     ${s.stands && s.stands.length ? `<div><h3>Fotopunkter</h3><div class="standlist">${s.stands.map((p, i) =>
-      `<button data-i="${i}"><span class="n">${i + 1}</span><span><b>${p.name}</b>${p.note}</span></button>`).join("")}</div></div>` : ""}
+      `<div class="srow"><button data-i="${i}"><span class="n">${i + 1}</span><span><b>${p.name}</b>${p.note}</span></button><a class="gm" href="${gmaps(p.lat, p.lon)}" target="_blank" rel="noopener" title="Öppna fotopunkten i Google Maps">Maps</a></div>`).join("")}</div></div>` : ""}
     <div class="status" style="--sc:var(--${sk === "na" ? "closed" : sk === "closed" ? "bad" : sk})"><span><span class="pill ${sk}">${stxt}</span></span>
       <span>${s.statusNote}</span><span class="small">Källa: <a href="${src.u}" target="_blank" rel="noopener">${src.t}</a>. Kontrollerat ${STATUS_DATE}.</span></div>
     <div><h3>Ta sig dit</h3><dl>
@@ -226,7 +228,7 @@ function openCard(id) {
     <div><h3>Ljus</h3><p style="margin:0">${s.light}</p></div>
     ${s.tips ? `<div><h3>Tips</h3><p style="margin:0">${s.tips}</p></div>` : ""}
     <div class="tags">${s.figure ? "<span>Figur/modell</span>" : ""}${s.still ? "<span>Still life för klienter</span>" : ""}${s.shot ? "<span>Redan i portfolion</span>" : ""}</div>
-    <div class="links"><a href="${nav}" target="_blank" rel="noopener">Vägbeskrivning</a>
+    <div class="links"><a href="${gmaps(s.lat, s.lon)}" target="_blank" rel="noopener">Öppna i Google Maps</a><a href="${nav}" target="_blank" rel="noopener">Vägbeskrivning</a>
       ${s.mode === "hike" || /SIMplifica|PR1/.test(s.fee) ? `<a href="${SRC.fees.u}" target="_blank" rel="noopener">Boka led (SIMplifica)</a>` : ""}
       ${s.cam ? `<a href="${s.cam.url}" target="_blank" rel="noopener">Webbkamera: ${s.cam.name}${s.cam.km ? ` (${String(s.cam.km).replace(".", ",")} km)` : ""}</a>`
         : `<a href="https://www.netmadeira.com/webcams-madeira" target="_blank" rel="noopener">Webbkameror (alla)</a>`}
@@ -301,7 +303,7 @@ $("#lb").addEventListener("touchend", (e) => { if (tx == null) return; const dx 
 
 // Förhandsbilder: geotaggade foton från Wikimedia Commons nära platsen och dess fotopunkter
 const galCache = {}; let curP;
-const curated = () => (curP ||= fetch("galleries.json?v=10").then((r) => r.json()).catch(() => ({})));
+const curated = () => (curP ||= fetch("galleries.json?v=11").then((r) => r.json()).catch(() => ({})));
 async function loadGallery(s, silent) {
   const el = () => (st.sel === s.id ? $("#gal") : null);
   if (!galCache[s.id]) galCache[s.id] = (async () => {
