@@ -217,7 +217,7 @@ const SPOTS = [
     why: "Klippstig längs norrkusten mellan Boca do Risco och Porto da Cruz, med vertikala fall mot havet.",
     figure: true, still: false, shot: false,
     status: "unknown", statusNote: "Vägen Caminho do Larano i Porto da Cruz stängdes efter skred under Charles. Det är oklart om klippstigen påverkas. Starta hellre från Boca do Risco (Caniçal-sidan) och vänd vid ras.", src: "larano", tips: "" },
-  { id: "anjos", name: "Cascata dos Anjos", cat: "water", wx: "soft", lat: 32.6782, lon: -17.1258, ele: 40,
+  { id: "anjos", name: "Cascata dos Anjos", cat: "water", wx: "soft", lat: 32.68667, lon: -17.11381, ele: 40,
     style: 3, fog: 1, calm: 3, mode: "car", walk: 5, km: 0.2, gain: 0, diff: "Lätt", fee: "Ingen",
     light: "Eftermiddag.",
     why: "Vattenfallet som faller över den gamla kustvägen.",

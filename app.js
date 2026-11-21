@@ -1,6 +1,15 @@
 /* Fotokartan: Leaflet-karta över SPOTS (spots.js) + live-prognos från Open-Meteo per plats. */
 (() => {
 const $ = (s) => document.querySelector(s);
+const ICON = { // små glyfer (24x24, streck) för punkter, chips och hover
+  forest: '<path d="M12 3l5 7h-3l4 6H6l4-6H7z"/><path d="M12 16v5"/>',
+  summit: '<path d="M2 20l7-12 4 6 2-3 7 9z"/><path d="M7.5 10.5l1.5 1.5 1.5-1.5"/>',
+  view:   '<circle cx="7" cy="14" r="3.5"/><circle cx="17" cy="14" r="3.5"/><path d="M10.5 14h3M5 11l2-6h2M19 11l-2-6h-2"/>',
+  water:  '<path d="M12 3s6 7 6 11a6 6 0 01-12 0c0-4 6-11 6-11z"/>',
+  coast:  '<path d="M2 15c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M2 20c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2"/><path d="M6 10l4-6 3 4 2-2 3 4"/>',
+  flower: '<circle cx="12" cy="10" r="2.2"/><path d="M12 7.8C12 4 15 4 15 6.5S12 9 12 9M12 7.8C12 4 9 4 9 6.5S12 9 12 9M14.2 10c3.5 0 3.5 3 1 3s-3.2-2-3.2-2M9.8 10c-3.5 0-3.5 3-1 3s3.2-2 3.2-2M12 12.2V21M12 18c-2 0-4-1.5-4-3"/>',
+};
+const svg = (k, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICON[k]}</svg>`;
 const CATS = {
   forest: { n: "Skog och dimma", c: "--c-forest" },
   summit: { n: "Ovan molnen", c: "--c-summit" },
@@ -9,6 +18,9 @@ const CATS = {
   coast:  { n: "Kust och lava", c: "--c-coast" },
   flower: { n: "Blommor och trädgårdar", c: "--c-flower" },
 };
+// Betyg 1–5 som på skatekartan. Satt för hand (s.rating) eller uppskattat från stilmatch och hur lugnt det är.
+const ratingOf = (s) => s.rating || Math.max(1, Math.min(5, Math.round(s.style + (s.calm >= 4 ? 0.4 : s.calm <= 1 ? -0.6 : 0))));
+const stars = (n) => `<span class="stars">${"●".repeat(n)}<i>${"●".repeat(5 - n)}</i></span>`;
 const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 const store = { get(k, d) { try { const v = localStorage.getItem("fk_" + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
                 set(k, v) { try { localStorage.setItem("fk_" + k, JSON.stringify(v)); } catch {} } };
@@ -118,13 +130,15 @@ const walkTxt = (s) => s.mode === "car" ? "Bil ända fram" : `${s.walk} min gån
 
 // ── chips ──
 function renderChips() {
-  $("#chips").innerHTML = Object.entries(CATS).map(([k, c]) => {
+  const all = st.cats.size === Object.keys(CATS).length;
+  $("#chips").innerHTML = `<button class="chip all ${all ? "on" : ""}" data-k="*">Alla<span class="n">${SPOTS.length}</span></button>` + Object.entries(CATS).map(([k, c]) => {
     const n = SPOTS.filter((s) => s.cat === k).length;
-    return `<button class="chip ${st.cats.has(k) ? "" : "off"}" data-k="${k}" style="--c:var(${c.c})"><span class="dot"></span>${c.n}<span class="n">${n}</span></button>`;
+    return `<button class="chip ${st.cats.has(k) ? "" : "off"}" data-k="${k}" style="--c:var(${c.c})"><span class="dot">${svg(k)}</span>${c.n}<span class="n">${n}</span></button>`;
   }).join("");
 }
 $("#chips").onclick = (e) => { const b = e.target.closest(".chip"); if (!b) return; const k = b.dataset.k;
-  if (st.cats.size === Object.keys(CATS).length) { st.cats = new Set([k]); } else if (st.cats.has(k)) { st.cats.delete(k); if (!st.cats.size) st.cats = new Set(Object.keys(CATS)); } else st.cats.add(k);
+  if (k === "*") st.cats = new Set(Object.keys(CATS));
+  else if (st.cats.size === Object.keys(CATS).length) { st.cats = new Set([k]); } else if (st.cats.has(k)) { st.cats.delete(k); if (!st.cats.size) st.cats = new Set(Object.keys(CATS)); } else st.cats.add(k);
   store.set("cats", [...st.cats]); renderChips(); render(); };
 
 function segs() {
@@ -147,7 +161,7 @@ function visible() {
     && (!st.q || (s.name + " " + s.why).toLowerCase().includes(st.q))
     && (!st.onlyGood || (judge(s) || {}).k === "good"));
 }
-function rank(s) { const j = judge(s); return s.style * 2 + (j ? (j.k === "good" ? 3 : j.k === "ok" ? 1 : -1) : 0) + s.calm * 0.4 + accScore(s) * 0.3; }
+function rank(s) { const j = judge(s); return ratingOf(s) * 2 + (j ? (j.k === "good" ? 3 : j.k === "ok" ? 1 : -1) : 0) + s.calm * 0.4 + accScore(s) * 0.3; }
 let lastKey = "";
 function render() {
   const vis = visible().sort((a, b) => rank(b) - rank(a));
@@ -156,12 +170,13 @@ function render() {
   if (key !== lastKey) {
     lastKey = key; layer.clearLayers();
     for (const s of vis) {
-      const j = judge(s), d = 14 + s.style * 3;
+      const j = judge(s), d = 18 + ratingOf(s) * 2.5;
       const ring = s.status === "closed" ? "var(--closed)" : j ? `var(--${j.k})` : "var(--ink)";
       const icon = L.divIcon({ className: "pinwrap", iconSize: [d, d],
-        html: `<div class="pin${s.status === "closed" ? " closed" : ""}" data-id="${s.id}" style="--c:var(${CATS[s.cat].c});--r:${ring};width:${d}px;height:${d}px"></div>` });
-      const m = L.marker([s.lat, s.lon], { icon, riseOnHover: true, zIndexOffset: s.style * 100, keyboard: true, title: s.name })
-        .bindTooltip(s.name, { className: "lbl", direction: "top", offset: [0, -d / 2] })
+        html: `<div class="pin${s.status === "closed" ? " closed" : ""}" data-id="${s.id}" style="--c:var(${CATS[s.cat].c});--r:${ring};width:${d}px;height:${d}px">${svg(s.cat)}</div>` });
+      const m = L.marker([s.lat, s.lon], { icon, riseOnHover: true, zIndexOffset: ratingOf(s) * 100, keyboard: true, title: s.name })
+        .bindTooltip(() => tipHtml(s), { className: "tip", direction: "top", offset: [0, -d / 2], opacity: 1 })
+        .on("mouseover", () => loadThumb(s).then(() => m.isTooltipOpen() && m.setTooltipContent(tipHtml(s))))
         .on("click", (e) => { L.DomEvent.stop(e); openCard(s.id); });
       m.addTo(layer); markers[s.id] = m;
     }
@@ -170,13 +185,13 @@ function render() {
   $("#sheetSub").textContent = `${vis.length} av ${SPOTS.length}, bäst först`;
   $("#list").innerHTML = vis.length ? vis.map((s) => {
     const j = judge(s), [sk, stxt] = STATUS[s.status];
-    return `<button class="item ${st.sel === s.id ? "sel" : ""}" data-id="${s.id}" style="--c:var(${CATS[s.cat].c})"><span class="dot"></span>
+    return `<button class="item ${st.sel === s.id ? "sel" : ""}" data-id="${s.id}" style="--c:var(${CATS[s.cat].c})"><span class="dot">${svg(s.cat)}</span>
       <span style="min-width:0"><div class="t">${s.name}</div><div class="w">${walkTxt(s)}</div></span>
-      <span class="meta"><span class="score">${"●".repeat(s.style)}${"○".repeat(5 - s.style)}</span>
+      <span class="meta">${stars(ratingOf(s))}
       ${s.status !== "open" && s.status !== "unknown" ? `<span class="pill ${sk}">${stxt}</span>` : j ? `<span class="pill ${j.k}">${j.t}</span>` : `<span class="pill ${sk}">${stxt}</span>`}</span></button>`;
   }).join("") : `<div class="empty">Inga platser matchar filtren.</div>`;
 }
-$("#list").onclick = (e) => { const b = e.target.closest(".item"); if (b) { openCard(b.dataset.id); map.flyTo([SPOTS.find((s) => s.id === b.dataset.id).lat, SPOTS.find((s) => s.id === b.dataset.id).lon], Math.max(map.getZoom(), 12)); } };
+$("#list").onclick = (e) => { const b = e.target.closest(".item"); if (b) openCard(b.dataset.id); };
 function openSheet(on) { $("#sheet").classList.toggle("collapsed", !on); $("#sheetBar").setAttribute("aria-expanded", on); }
 $("#sheetBar").onclick = () => openSheet($("#sheet").classList.contains("collapsed"));
 
@@ -189,7 +204,8 @@ function openCard(id) {
   const nav = `https://www.google.com/maps/dir/?api=1&destination=${s.lat},${s.lon}`;
   const slotName = { rise: "soluppgång", mid: "kl 10", set: "solnedgång" }[st.slot], dayName = ["idag", "i morgon", "i övermorgon"][st.day];
   $("#card").innerHTML = `<button class="x" aria-label="Stäng">×</button><div class="body" style="--c:var(${CATS[s.cat].c})">
-    <div><div class="kind">${CATS[s.cat].n} · ${s.ele} m ö.h.</div><h2>${s.name}</h2></div>
+    <div><div class="kind">${svg(s.cat)}${CATS[s.cat].n} · ${s.ele} m ö.h.</div><h2>${s.name}</h2>
+      <div class="rate">${stars(ratingOf(s))}<span class="small">${s.rating ? "betygsatt för hand" : "uppskattat från stilmatch och lugn"}</span></div></div>
     <div class="gal" id="gal"><span class="ph"></span><span class="ph"></span><span class="ph"></span></div>
     <p class="why" style="margin:0">${s.why}</p>
     ${s.stands && s.stands.length ? `<div><h3>Fotopunkter</h3><div class="standlist">${s.stands.map((p, i) =>
@@ -216,7 +232,7 @@ function openCard(id) {
   $("#card .standlist")?.addEventListener("click", (e) => { const b = e.target.closest("button"); if (!b) return;
     const p = s.stands[+b.dataset.i]; map.flyTo([p.lat, p.lon], 16); standMarkers[+b.dataset.i]?.openTooltip(); });
   showStands(s); loadGallery(s); render();
-  if (!(s.stands && s.stands.length)) keepVisible(s);
+  keepVisible(s);
 }
 // Flytta kartan så att vald plats inte hamnar under kortet eller sidopanelen
 function keepVisible(s) {
@@ -239,10 +255,23 @@ function showStands(s) {
       .on("click", (e) => { L.DomEvent.stop(e); $("#card .standlist")?.children[i]?.scrollIntoView({ block: "center", behavior: "smooth" }); });
     m.addTo(standLayer); standMarkers.push(m);
   });
-  if (s.stands && s.stands.length) {
-    const b = L.latLngBounds([[s.lat, s.lon], ...s.stands.map((p) => [p.lat, p.lon])]);
-    map.flyToBounds(b.pad(0.4), { maxZoom: 16, paddingBottomRight: phone.matches ? [0, innerHeight * 0.55] : [480, 0] });
-  }
+}
+
+// Hover: miniatyrbild, kategori, betyg och status
+const thumbs = {};
+function loadThumb(s) {
+  if (thumbs[s.id] !== undefined) return Promise.resolve();
+  if (s.thumb) { thumbs[s.id] = s.thumb; return Promise.resolve(); }
+  thumbs[s.id] = null; // markerar "hämtas" så att vi bara frågar en gång
+  return loadGallery(s, true).then((imgs) => { thumbs[s.id] = imgs && imgs[0] ? imgs[0].src : ""; });
+}
+function tipHtml(s) {
+  const t = thumbs[s.id], [sk, stxt] = STATUS[s.status], j = judge(s);
+  return `<div class="tipc" style="--c:var(${CATS[s.cat].c})">
+    ${t ? `<img src="${t}" alt="">` : t === "" ? "" : `<span class="tph"></span>`}
+    <div class="tipb"><b>${s.name}</b>
+      <span class="tag">${svg(s.cat)}${CATS[s.cat].n}</span>
+      <span class="tipr">${stars(ratingOf(s))}${s.status === "closed" || s.status === "partial" ? `<span class="pill ${sk}">${stxt}</span>` : j ? `<span class="pill ${j.k}">${j.t}</span>` : ""}</span></div></div>`;
 }
 
 // Lightbox för förhandsbilderna
@@ -267,7 +296,7 @@ $("#lb").addEventListener("touchend", (e) => { if (tx == null) return; const dx 
 
 // Förhandsbilder: geotaggade foton från Wikimedia Commons nära platsen och dess fotopunkter
 const galCache = {};
-async function loadGallery(s) {
+async function loadGallery(s, silent) {
   const el = () => (st.sel === s.id ? $("#gal") : null);
   if (!galCache[s.id]) galCache[s.id] = (async () => {
     const pts = [[s.lat, s.lon], ...(s.stands || []).slice(0, 2).map((p) => [p.lat, p.lon])];
@@ -289,7 +318,7 @@ async function loadGallery(s) {
     if (out.length) store.set("gal_" + s.id, { at: Date.now(), imgs: out.slice(0, 14) });
     return out.slice(0, 14);
   })();
-  const imgs = await galCache[s.id]; const g = el(); if (!g) return;
+  const imgs = await galCache[s.id]; if (silent) return imgs; const g = el(); if (!g) return imgs;
   g.onclick = (e) => { const a = e.target.closest("a[data-n]"); if (!a) return; e.preventDefault(); lbOpen(imgs, +a.dataset.n); };
   g.innerHTML = imgs.length ? imgs.map((i, n) => `<a href="${i.page}" data-n="${n}" title="${i.t.replace(/"/g, "")}"><img src="${i.src}" alt="${i.t.replace(/"/g, "")}" loading="lazy"></a>`).join("")
     : `<p class="small" style="padding:0 18px">Inga geotaggade bilder hittades här. Prova "Fler bilder".</p>`;

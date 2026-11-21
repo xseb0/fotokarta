@@ -181,3 +181,33 @@ dt{color:var(--muted)} dd{margin:0;font-weight:400}
 .lbprev{left:max(12px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
 .lbnext{right:max(12px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
 .gal a{cursor:zoom-in}
+
+/* v6: ikoner, betyg, hover-kort, Alla-chip */
+.ic{width:100%;height:100%;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;display:block}
+.pin{display:grid;place-items:center;color:#070d12}
+.pin .ic{width:62%;height:62%}
+.chip .dot{width:16px;height:16px;display:grid;place-items:center;color:#070d12;background:var(--c)}
+.chip .dot .ic{width:11px;height:11px}
+.chip.off .dot{color:var(--c)}
+.chip.all{font-weight:600}
+.chip.all.on{background:var(--button)}
+.item .dot{width:20px;height:20px;display:grid;place-items:center;color:#070d12;margin-top:0}
+.item .dot .ic{width:13px;height:13px}
+.item{grid-template-columns:20px 1fr auto}
+.stars{color:var(--accent-hi);font:500 11px var(--f-mono);letter-spacing:1px;white-space:nowrap}
+.stars i{color:rgba(232,230,225,.18);font-style:normal}
+.kind{display:flex;align-items:center;gap:6px}
+.kind .ic{width:14px;height:14px}
+.rate{display:flex;align-items:center;gap:10px;margin-top:6px}
+.rate .stars{font-size:14px;letter-spacing:2px}
+.leaflet-tooltip.tip{background:var(--panel);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:0;box-shadow:0 6px 24px rgba(0,0,0,.6);overflow:hidden;white-space:normal}
+.leaflet-tooltip.tip::before{display:none}
+.tipc{width:220px;display:flex;flex-direction:column}
+.tipc img{width:220px;height:140px;object-fit:cover;display:block;background:var(--hover)}
+.tph{display:block;width:220px;height:140px;background:linear-gradient(90deg,var(--hover),var(--bg),var(--hover));background-size:200% 100%;animation:sh 1.2s infinite linear}
+.tipb{padding:8px 10px 10px;display:flex;flex-direction:column;gap:4px;font:400 12.5px var(--f-body)}
+.tipb b{font:600 16px/1.15 var(--f-display)}
+.tipb .tag{display:flex;align-items:center;gap:5px;color:var(--c);font:600 10.5px var(--f-body);text-transform:uppercase;letter-spacing:.08em}
+.tipb .tag .ic{width:13px;height:13px}
+.tipr{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+@media (hover:none){.leaflet-tooltip.tip{display:none}}
