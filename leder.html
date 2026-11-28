@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070d12">
+<title>Leder på Madeira</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="style.css?v=13">
+<link rel="stylesheet" href="leder.css?v=13">
+</head>
+<body class="trails">
+<header class="th">
+  <div class="throw">
+    <a class="logo" href="index.html">Foto<span>karta</span></a>
+    <nav class="tabs" aria-label="Vy"><a href="index.html">Karta</a><a href="leder.html" aria-current="page">Leder</a></nav>
+  </div>
+  <h1>Leder på Madeira</h1>
+  <p class="lead" id="lead">Vandringar valda och sorterade efter din stil: dimskog, vattenfall i mörk sten och platser där en figur får plats. Öppna en led för rutt, höjdprofil, väder timme för timme och fotopunkter.</p>
+  <div class="ctl">
+    <div class="seg" id="day"><button data-v="0">Idag</button><button data-v="1">I morgon</button><button data-v="2">Övermorgon</button></div>
+    <div class="seg" id="sort"><button data-v="best">Bäst för dig</button><button data-v="wx">Bäst väder</button><button data-v="short">Kortast</button><button data-v="flat">Minst stigning</button></div>
+    <div class="seg" id="len"><button data-v="any">Alla längder</button><button data-v="3">Upp till 3 km</button><button data-v="6">3 till 6 km</button><button data-v="99">Över 6 km</button></div>
+    <div class="chips" id="chips"></div>
+    <label class="ck"><input type="checkbox" id="showClosed"> Visa stängda leder</label>
+  </div>
+  <p class="small" id="wxMsg">Hämtar prognos …</p>
+</header>
+
+<main class="tlist" id="list" aria-live="polite"></main>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Bild i större format" hidden>
+  <div class="lbstage"><img id="lbImg" alt=""></div>
+  <button class="lbbtn lbclose" id="lbClose" aria-label="Stäng">×</button>
+  <button class="lbbtn lbprev" id="lbPrev" aria-label="Föregående bild">‹</button>
+  <button class="lbbtn lbnext" id="lbNext" aria-label="Nästa bild">›</button>
+  <p class="lbcap" id="lbCap"></p>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="spots.js?v=13"></script>
+<script src="spots-region.js?v=13"></script>
+<script src="thumbs.js?v=13"></script>
+<script src="leder.js?v=13"></script>
+</body>
+</html>
